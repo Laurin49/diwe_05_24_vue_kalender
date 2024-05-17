@@ -1,11 +1,26 @@
 <template>
   <div class="card border-start" :class="cardClasses">
-    <div class="card-header text-center" :class="cardHeaderClasses" role="button">
+    <div
+      class="card-header text-center"
+      :class="cardHeaderClasses"
+      role="button"
+    >
       <strong>{{ day.fullName }}</strong>
     </div>
     <div class="card-body">
       <div id="calendar-day">
-        <CalendarEvent v-for="event in day.events" :key="event.title" :event="event"/>
+        <CalendarEvent
+          v-for="event in day.events"
+          :key="event.title"
+          :event="event"
+        >
+          <template #eventPriority="slotProps">       // Kurzschreibweise für v-slot ist #
+            <h5>{{ slotProps.priorityDisplayName }}</h5>
+          </template>
+          <template #default="{ event }">         // Destructering stat slotProps { event }
+            <i>{{event.title }}</i>
+          </template>
+        </CalendarEvent>
       </div>
     </div>
   </div>
@@ -22,7 +37,7 @@ export default {
     day: {
       type: Object,
       required: true,
-      default: function() {
+      default: function () {
         return {
           id: -1,
           shortName: "N.a.",
@@ -31,7 +46,7 @@ export default {
           active: false,
         };
       },
-      validator: function(value) {
+      validator: function (value) {
         if (Object.keys(value).includes("id")) {
           return true;
         }
@@ -40,17 +55,16 @@ export default {
   },
   computed: {
     cardClasses() {
-      return this.day.id === Store.getters.activeDay().id 
-        ? ["border-primary"] 
+      return this.day.id === Store.getters.activeDay().id
+        ? ["border-primary"]
         : null;
     },
     cardHeaderClasses() {
-      return this.day.id === Store.getters.activeDay().id 
-        ? ["bg-primary", "text-white"] 
+      return this.day.id === Store.getters.activeDay().id
+        ? ["bg-primary", "text-white"]
         : null;
     },
-  }
+  },
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -2,10 +2,16 @@
   <div id="calendar-event">
     <div class="alert text-center" :class="alertColor">
       <div>
-        <strong>{{ priorityDisplayName }}</strong>
+        <slot name="eventPriority" :priorityDisplayName="priorityDisplayName">
+          <!-- Fallback Content - wenn der Inhalt von aussen nicht gefüllt wird -->
+          <strong>{{ priorityDisplayName }}</strong>
+        </slot>
       </div>
 
-      <div>{{ event.title }}</div>
+      <slot :event="event">
+        <!-- Fallback Content - wenn der Inhalt von aussen nicht gefüllt wird -->
+        <div>{{ event.title }}</div>
+      </slot>
 
       <div>
         <i class="fas fa-edit me-2" role="button"></i>
