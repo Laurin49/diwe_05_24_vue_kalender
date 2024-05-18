@@ -13,11 +13,14 @@
           v-for="event in day.events"
           :key="event.title"
           :event="event"
+          :day="day"
         >
-          <template #eventPriority="slotProps">       // Kurzschreibweise für v-slot ist #
+          <!-- Kurzschreibweise für v-slot ist # -->
+          <template #eventPriority="slotProps">       
             <h5>{{ slotProps.priorityDisplayName }}</h5>
           </template>
-          <template #default="{ event }">         // Destructering stat slotProps { event }
+          <!-- Destructering stat slotProps { event } -->
+          <template #default="{ event }">         
             <i>{{event.title }}</i>
           </template>
         </CalendarEvent>
