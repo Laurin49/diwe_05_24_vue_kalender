@@ -3,12 +3,17 @@ import { calendarWeekData } from "./seed";
 
 const state = reactive({
   calendarWeekData,
+  activeView: "CalendarWeek",
 });
 
 const getters = {
   activeDay: () => state.calendarWeekData.find((day) => day.active),
+  activeView: () => state.activeView,
 };
 const mutations = {
+  setActiveView(view) {
+    state.activeView = view;
+  },
   editEvent(dayId, eventTitle) {
     // alle edit Attribute auf false setzen
     state.calendarWeekData.map((dayObj) => {
@@ -36,9 +41,21 @@ const mutations = {
     );
     dayObj.events.splice(eventIndex, 1);
   },
-
-};
-
+  setActiveDay(dayId) {
+    state.calendarWeekData.map((dayObj) => {
+      dayObj.id === dayId ? (dayObj.active = true) : (dayObj.active = false);
+    })
+  },
+  storeEvent(eventDO) {
+    const activeDay = getters.activeDay();
+    activeDay.events.push({
+      title: eventDO.title,
+      edit: false,
+      color: eventDO.color,
+      priority: Number(eventDO.priority),
+    });
+  }
+}
 export default {
   state: readonly(state),
   getters,
