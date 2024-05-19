@@ -5,7 +5,9 @@
         <!-- <CalendarWeekAsList />
         <CalendarWeek /> -->
         <keep-alive>
-          <component :is="activeView"/>
+          <transition name="fade" mode="out-in" appear>
+            <component :is="activeView" />
+          </transition>
         </keep-alive>
       </div>
     </div>
@@ -24,7 +26,9 @@
             <i class="fas fa-cogs"></i>
           </button>
         </div>
-        <CalendarSettings v-if="displaySettings" />
+        <transition name="fade">
+          <CalendarSettings v-if="displaySettings" />
+        </transition>
       </div>
     </div>
   </div>
@@ -45,7 +49,7 @@ export default {
     CalendarEntry,
     CalendarSettings,
     // CalendarSettings: defineAsyncComponent(() => {
-    //   import(/*webpackChunkName: 'CalendarSettingsComponent' */ 
+    //   import(/*webpackChunkName: 'CalendarSettingsComponent' */
     //   "./components/CalendarSettings.vue");
     // }),
   },
@@ -60,7 +64,7 @@ export default {
     },
     activeView() {
       return Store.getters.activeView();
-    }
+    },
   },
   methods: {
     toggleDisplaySettings() {
@@ -77,5 +81,18 @@ export default {
 .square {
   width: 40px;
   height: 40px;
+}
+/* Transition fade */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease-out;
 }
 </style>
