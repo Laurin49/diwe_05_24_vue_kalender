@@ -26,7 +26,12 @@
             <i class="fas fa-cogs"></i>
           </button>
         </div>
-        <transition name="fade">
+        <!-- <transition name="fade">
+          <CalendarSettings v-if="displaySettings" />
+        </transition> -->
+        <transition 
+          enter-active-class="animate__animated animate__bounceInRight"
+          leave-active-class="animate__animated animate__bounceOutRight">
           <CalendarSettings v-if="displaySettings" />
         </transition>
       </div>
@@ -77,6 +82,7 @@ export default {
 <style>
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~animate.css/animate.min.css";
 
 .square {
   width: 40px;
